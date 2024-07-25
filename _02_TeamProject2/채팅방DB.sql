@@ -3,6 +3,9 @@
 drop table chatroom
 drop sequence seq_chatroom_idx
 
+-- 일련 번호 시퀀스 관리객체
+create sequence seq_chatroom_idx
+
 create table chatroom
 (
 	chat_idx		int,					-- 채팅방 식별 번호
@@ -12,8 +15,6 @@ create table chatroom
 	mes_idx			int						-- 메세지 번호(식별번호)
 )
 
--- 일련 번호 시퀀스 관리객체
-create sequence seq_chatroom_idx
 
 -- 기본키 -> chat_idx
 alter table chatroom add constraint pk_chat_idx primary key(chat_idx);

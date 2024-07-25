@@ -3,6 +3,9 @@
 drop table message
 drop sequence seq_message_idx
 
+-- 일련 번호 시퀀스 관리객체
+create sequence seq_message_idx
+
 create table message
 (
 	msg_idx			int,				  -- 메세지 번호
@@ -11,8 +14,6 @@ create table message
 	msg_time		date default sysdate -- 메세지 시간
 )
 
--- 일련 번호 시퀀스 관리객체
-create sequence seq_message_idx
 
 -- 기본키
 alter table message

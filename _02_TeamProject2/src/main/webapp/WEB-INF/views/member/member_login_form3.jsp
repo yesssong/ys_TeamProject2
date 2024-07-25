@@ -15,19 +15,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 
-<style type="text/css">
-	#box{
-		width: 500px;
-		margin: auto;
-		margin-top: 200px;
-	   }
-	   
-	input[type='button']{
-		width: 100px;
-	}
-
-</style>
-
 <script type="text/javascript">
 
 	function send(f){
@@ -93,29 +80,35 @@
 
 <form>
 	<div id="box">
-		<div class="form-group">
-			<input type="text" class="form-control" name="mem_id" placeholder="아이디">
-		</div>
-		<div class="form-group">
-			<input type="password" class="form-control" name="mem_pwd" placeholder="비밀번호">
-		</div>
-
-		<div class="checkbox" >
-			<label><input type="checkbox">아이디 저장</label>
-		</div>
-		<input type="button" class="btn btn-block" value="로그인하기" onclick="send(this.form);">
-		<hr>
-		<div>
-			<span>아직 회원이 아니시라면?</span>
-			<a href="#"><span>회원가입 하러 가기</span></a>
-		</div>
-		<div>
-			<span>아이디 찾기</span>
-			<span>비밀번호 찾기</span>
-		</div>
-		
-		<!-- <input type="button" class="btn btn-block" value="회원가입하기"> -->
+		<div class="form-group form-group-lg">
+			<div class="form-group text1">
+				<input type="text" class="form-control" name="mem_id" placeholder="아이디">
+			</div>
+			<div class="form-group text1">
+				<input type="password" class="form-control" name="mem_pwd" placeholder="비밀번호">
+			</div>
 	
+			<div class="checkbox" >
+				&nbsp;<label><input type="checkbox">아이디 저장</label>
+			</div>
+			<div class="login-btn">
+		 		<input style="background-color: #2B2E36 !important;" type="button" class="btn btn-block btn-lg text-#999999" value="로그인" onclick="send(this.form);">
+			</div>
+			
+			<hr>
+			<div class="membership_wrap">
+				<div class="membership1">아직 회원이 아니시라면?</div>
+				<div class="membership2">
+					<a href="insert.do"><span>회원가입 하러 가기&nbsp;→</span></a>
+				</div>
+			</div>
+			
+	<!-- 		<div>
+				<span>아이디 찾기</span>
+				<span>비밀번호 찾기</span>
+			</div> -->
+			
+		</div>
 	</div>
 </form>
 </body>

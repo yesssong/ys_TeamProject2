@@ -39,6 +39,8 @@ insert into member values(seq_member_idx.nextVal,
 						 '김관리','admin','admin','관리자','12345','서울시 관악구 남부순환로','localhost',default,'관리자');
 insert into member values(seq_member_idx.nextVal,
 						 '일길동','one','1234','one길동','11111','서울시 용산구','localhost',default,default);
+insert into member values(seq_member_idx.nextVal,
+						 '이길동','two','1234','two길동',null,null,'localhost',default,default);
 
 
 
@@ -46,6 +48,8 @@ insert into member values(seq_member_idx.nextVal,
 alter table member
 	add constraint ck_member_rating check(mem_rating between 0 and 5);
 
+
+select * from member
 
 
 
