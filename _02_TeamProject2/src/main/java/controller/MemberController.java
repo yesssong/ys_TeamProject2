@@ -58,6 +58,22 @@ public class MemberController {
 	}
 
 	// 아이디 중복체크
+	@RequestMapping(value="check_nickname.do", produces="application/json; charset=utf-8;")
+	@ResponseBody
+	public String check_nickname(String mem_nickname) {
+		
+		// mem_id에 해당 되는 유저정보 검색
+		MemberVo vo = member_dao.selectOne(mem_nickname);
+		// vo에 없다면 중복되는 id가 없다는 뜻
+		boolean bResult = (vo==null);
+		
+		JSONObject json = new JSONObject();
+		json.put("result", bResult);
+		
+		return json.toString();
+	}
+	
+	// 아이디 중복체크
 	@RequestMapping(value="check_id.do", produces="application/json; charset=utf-8;")
 	@ResponseBody
 	public String check_id(String mem_id) {
@@ -123,14 +139,14 @@ public class MemberController {
 		// 로그인 처리 : 현재 로그인 된 객체 user의 정보를 session에 저장
 		session.setAttribute("user", user);
 		
-		return "redirect:../board/list.do";
+		return "redirect:../member/list.do";
 	}// end : login
 	
 	// 로그아웃
 	@RequestMapping("logout.do")
 	public String logout() {
 		session.removeAttribute("user");
-		return "redirect:../board/list.do";
+		return "redirect:../member/list.do";
 	}
 	
 	
@@ -194,7 +210,7 @@ public class MemberController {
 			session.setAttribute("user", user);
 		}
 		
-		return "redirect:../board/list.do";		// 수정 후 메인화면으로 이동
+		return "redirect:../member/list.do";		// 수정 후 메인화면으로 이동
 	}
 	
 	

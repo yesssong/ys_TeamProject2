@@ -23,8 +23,8 @@
 	</beans:bean>
 	
 	
-	<!-- Auto-Detecting -->
-	<context:component-scan base-package="controller" />
+	<!-- 객체 자동생성 Auto-Detecting -->
+	<context:component-scan base-package="controller" />	<!-- controller 붙은 애 찾아서 객체 자동 생성해주겠다 -->
 	
 	<!-- 수동생성 -->
 	

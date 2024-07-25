@@ -6,8 +6,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<!-- 회원가입 페이지 -->
+
+
 <!-- css 연결 -->
-<link rel="stylesheet" href="../css/insert_form3.css">
+<link rel="stylesheet" href="../resources/css/member/modify_form.css">
 
 <!-- BootStrap 3.x-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -18,81 +21,6 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script type="text/javascript">
-
-	// 아이디 체크
-	function check_id(){
-		// 회원 가입 버튼은 비활성화 (id체크 후 활성화 할 것임)
-		// <input id="btn_register" type="button"....disabled="disabled">
-		$("#btn_register").prop("disabled", true);
-		
-		let mem_id = $("#mem_id").val();
-		let mem_id_check = /^[A-Za-z0-9]{3,8}$/;
-		
-		if(mem_id.length==0){
-			$("#id_msg").html("");
-			return;
-		}
-		
-		if(mem_id.length<3){
-			$("#id_msg").html("아이디는 3~8자리 영문과 숫자만 사용가능합니다.").css("color","IndianRed");
-			return;
-		}
-		// 서버에 현재 입력된 id를 체크 요청 jQuery Ajax 이용
-		$.ajax({
-			
-			url		:	"check_id.do",		// id 체크하는 서블릿 만들어서 체크해달라고 요청하기(서버한테) -> MemberCheckIdAction
-			data	:	{"mem_id":mem_id},	// parameter -> check_id.do?mem_id=one   서버에 보낼 데이터 -> id 체크 중이므로 id 정보를 보내야함
-			dataType:	"json",				
-			success	:	function(res_data){
-					// res_data = {"result":true} or {"result":false}
-					if(res_data.result){
-						$("#id_msg").html("사용 가능한 아이디입니다").css("color","Aqua");
-						$("#btn_register").prop("disabled", false);
-					}else{
-						$("#id_msg").html("이미 사용 중인 아이디입니다").css("color","IndianRed");
-					}
-			},
-			error	:	function(err){
-					alert(err.responseText)	// 에러 확인하기 위해
-			}
-		});
-	} // end: check_id()
-	
-		// 닉네임 체크
-		function check_nickname(){
-		
-		$("#btn_register").prop("disabled", true);
-		
-		let mem_nickname = $("#mem_nickname").val();
-        let mem_nickname_check = /^[가-힣A-Za-z]{2,6}$/;
-        
-        if(mem_nickname.length==0) {
-            $("#nickname_msg").html("");
-            return;
-        }
-        
-        if(mem_nickname_check.test(mem_nickname)==false) {
-            $("#nickname_msg").html("닉네임은 2~6자리 영문 한글만 사용가능합니다.").css("color","IndianRed");
-            return;
-        }
-		
-		$.ajax({
-			url		:	"check_nickname.do",
-			data	:	{"mem_nickname":mem_nickname},
-			dataType:	"json",
-			success	:	function(res_data){
-				if(res_data.result) {
-					$("#nickname_msg").html("사용가능한 닉네임 입니다.").css("color","Aqua");
-					$("#btn_register").prop("disabled",false);
-				} else {
-					$("#nickname_msg").html("이미 사용중인 닉네임 입니다.").css("color","IndianRed");
-				}
-			},
-			error	:	function(err){
-				alert("현재, 요청이 지연되고 있습니다.");
-			}
-		});
-	}// end:check_nickname()
 	
 	// 주소 찾기 -> API
 	function find_addr(){
@@ -119,9 +47,9 @@
 		let mem_id 		 = f.mem_id.value.trim();
 		let mem_pwd	 	 = f.mem_pwd.value.trim();
 		let mem_nickname = f.mem_nickname.value.trim();
-		/* 필수항목 아님
+		
 		let mem_zipcode = f.mem_zipcode.value.trim();
-		let mem_addr 	= f.mem_addr.value.trim(); */
+		let mem_addr 	= f.mem_addr.value.trim();
 		
 		if(mem_name==''){
 			alert("이름을 입력하세요");
@@ -148,26 +76,53 @@
 			return;
 		} 
 
-		f.action = "insert.do";
+		if(mem_zipcode==""){
+			alert("우편번호를 입력하세요");
+			f.mem_zipcode.value="";
+			f.mem_zipcode.focus();
+			return;
+		}
+		
+		if(mem_addr==""){
+			alert("주소를 입력하세요");
+			f.mem_addr.value="";
+			f.mem_addr.focus();
+			return;
+		}
+		
+		f.action = "modify.do";
 		f.submit();		// 전송
 	}// end: send
 	
 </script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		// 엘리먼트 셀럭터 + 어트리뷰트 셀렉터 함께 사용 
+		$("select[name='mem_grade']").val("${ vo.mem_grade}")	/* select인데 name이 mem_grade인 애를 셀렉 */
+		
+	});
+</script>
+
 
 </head>
 
 <body>
 
 <form>
+	<!-- 회원번호 안 보이게 전송 -->
+	<input type="hidden" name="mem_idx" value="${ vo.mem_idx }">
+	
 	<div id="box">
+	<div class="sujeong">회원수정</div>
 	<div class="form-group form-group-lg">
 		<div class="form-group">
-			<div class="text1">이름</div>
-			<input type="text" class="form-control" name="mem_name" placeholder="이름 입력">
+			<div class="text1">이름</div>							<!-- 수정 전 원본 이름 -->
+			<input type="text" class="form-control" name="mem_name" value="${ vo.mem_name }" placeholder="이름 입력">
 		</div>
 		<div class="form-group">
-			<div class="text1">아이디</div>			
-			<input type="text" class="form-control" name="mem_id" id="mem_id" placeholder="아이디 입력" onkeyup="check_id();">
+			<div class="text1">아이디</div>						  <!-- id는 수정 불가하므로 읽기 전용 -->
+			<input type="text" class="form-control" name="mem_id" value="${ vo.mem_id }" readonly="readonly"">
 			<span id="id_msg"></span>
 		</div>
 		<div class="form-group">
@@ -187,13 +142,13 @@
 		</div>
 		<div class="form-group addr">
 			<div class="text1">주소</div>
-			<input style="width:100%" type="text" class="form-control" name="mem_addr" id="mem_addr">
+			<input style="width:100%" type="text" class="form-control" name="mem_addr" id="mem_addr" placeholder="상세주소 입력">
 		</div>
 
 		<hr>
 		<div class="membership-btn">
 	 		<input style="background-color: #2B2E36 !important;" type="button" class="btn btn-block btn-lg"
-	 		 	   value="가입하기" onclick="send(this.form);">
+	 		 	   value="수정하기" onclick="send(this.form);">
 		</div>
 		
 		<!-- <input style="background-color: #2B2E36;" type="button" class="btn btn-block btn-lg text-#999999"

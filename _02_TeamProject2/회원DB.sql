@@ -1,21 +1,22 @@
 /*
-drop table member
-drop sequence seq_member_idx
+drop table member;
+drop sequence seq_member_idx;
 
 -- 일련 번호 시퀀스 관리객체
 create sequence seq_member_idx
 create table member
 (
-    mem_idx             int,                        -- 회원번호
-    mem_name            varchar2(100) not null,     -- 이름
-    mem_id              varchar2(100) not null,     -- 아이디
-    mem_pwd             varchar2(100) not null,     -- 비밀번호
-    mem_nickname        varchar2(100) not null,     -- 닉네임
-    mem_zipcode         char(5),     				-- 우편번호
-    mem_addr            varchar2(1000),  		    -- 주소
-    mem_ip              varchar2(100) not null,     -- 아이피
-    mem_regdate         date default sysdate,       -- 가입일자
-    mem_grade           varchar2(100) default '일반'	-- 회원등급
+    mem_idx             int,                        	  -- 회원번호
+    mem_name            varchar2(100) not null,           -- 이름
+    mem_id              varchar2(100) not null,     	  -- 아이디
+    mem_pwd             varchar2(100) not null,     	  -- 비밀번호
+    mem_nickname        varchar2(100) not null,     	  -- 닉네임
+    mem_zipcode         char(5) not null,     		  	  -- 우편번호
+    mem_addr            varchar2(1000) not null,    	  -- 주소
+    mem_ip              varchar2(100) not null,     	  -- 아이피
+    mem_regdate         date default sysdate,       	  -- 가입일자
+    mem_grade           varchar2(100) default '일반',	  -- 회원등급
+    mem_filename		varchar2(100) default 'basic.jpg' -- 파일명
 )
 -- 기본키 -> mem_idx
 alter table member
@@ -36,11 +37,11 @@ alter table member
 select * from member
 
 insert into member values(seq_member_idx.nextVal,
-						 '김관리','admin','admin','관리자','12345','서울시 관악구 남부순환로','localhost',default,'관리자');
+						 '김관리','admin','admin','관리자','12345','서울시 관악구 남부순환로','localhost',default,'관리자', 'basic.jpg');
 insert into member values(seq_member_idx.nextVal,
-						 '일길동','one','1234','one길동','11111','서울시 용산구','localhost',default,default);
+						 '일길동','one','1234','one길동','11111','서울시 용산구','localhost',default,default, 'basic.jpg');
 insert into member values(seq_member_idx.nextVal,
-						 '이길동','two','1234','two길동',null,null,'localhost',default,default);
+						 '이길동','two','1234','two길동','22222','서울시 동작구','localhost',default,default, 'basic.jpg');
 
 
 

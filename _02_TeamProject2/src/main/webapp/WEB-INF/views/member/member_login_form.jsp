@@ -6,8 +6,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+
+<!-- 로그인 페이지 -->
+
+
 <!-- css 연결 -->
-<link rel="stylesheet" href="../css/login_form3.css">
+<link rel="stylesheet" href="../resources/css/member/login_form.css">
 
 <!-- BootStrap 3.x-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -64,6 +68,10 @@
 		if("${ param.reason == 'fail_pwd'}"=="true"){		// el 방식 작성 -> 지금 여러 방법 혼용해서 쓰는 중이므로 el 작성 시 "" 요걸로 감싼 후 작성
 			alert("비밀번호가 틀립니다");
 		}
+		
+		if(){
+			alert("아이디가 없습니다\n회원가입하시겠습니까")
+		}
 		///member/login_form.do?reason=session_timeout
 		if("${ param.reason == 'session_timeout'}"=="true"){		// PhotoInsertAction에 대한 내용 추가(세션 만료 안내)
 			alert("로그아웃 되었습니다");
@@ -79,27 +87,29 @@
 <body>
 
 <form>
+<input type="hidden" name="url" value="${ param.url }">  <!-- 세션 트래킹 -->
 	<div id="box">
 		<div class="form-group form-group-lg">
-			<div class="form-group text1">
-				<input type="text" class="form-control" name="mem_id" placeholder="아이디">
+			<div class="form-group text1">							    <!-- url에 있는 파라미터 값 읽어서 넣어주는 것  -->
+				<input type="text" class="form-control" name="mem_id" value="${ param.mem_id }" placeholder="아이디">
 			</div>
 			<div class="form-group text1">
 				<input type="password" class="form-control" name="mem_pwd" placeholder="비밀번호">
 			</div>
 	
 			<div class="checkbox" >
-				&nbsp;<label><input type="checkbox">아이디 저장</label>
+				&nbsp;<label><input type="checkbox">아이디 저장</label>	<!-- 기능 구현은 아직.. -->
 			</div>
 			<div class="login-btn">
-		 		<input style="background-color: #2B2E36 !important;" type="button" class="btn btn-block btn-lg text-#999999" value="로그인" onclick="send(this.form);">
+		 		<input style="background-color: #2B2E36 !important;" type="button" class="btn btn-block btn-lg text-#999999"
+		 			   value="로그인" onclick="send(this.form);">
 			</div>
 			
 			<hr>
 			<div class="membership_wrap">
 				<div class="membership1">아직 회원이 아니시라면?</div>
 				<div class="membership2">
-					<a href="insert.do"><span>회원가입 하러 가기&nbsp;→</span></a>
+					<a href="../member/list.do"><span>회원가입 하러 가기&nbsp;→</span></a>
 				</div>
 			</div>
 			
